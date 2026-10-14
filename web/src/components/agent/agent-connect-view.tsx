@@ -34,7 +34,7 @@ export function AgentConnectView({
 }) {
     const { t } = useTranslation();
     const { message } = App.useApp();
-    const steps = [{ title: t("agent.connect.pluginTitle"), text: t("agent.connect.pluginText") }, { title: t("agent.connect.directTitle"), text: t("agent.connect.directText"), command: "npx -y @basketikun/canvas-agent@latest" }];
+    const steps = [{ title: t("agent.connect.pluginTitle"), text: t("agent.connect.pluginText") }, { title: t("agent.connect.directTitle"), text: t("agent.connect.directText"), command: "npx -y @basketikun/canvas-agent@0.6.0" }];
     const statusText = connectError ? t("agent.status.failed") : connected ? activity : enabled ? t("agent.status.connecting") : t("agent.status.disconnected");
     const statusColor = connectError ? "#dc2626" : connected ? "#16a34a" : enabled ? "#d97706" : theme.node.muted;
     const copyCommand = (command: string) => {
@@ -73,6 +73,7 @@ export function AgentConnectView({
                     <div className="mt-1 text-xs leading-5" style={{ color: theme.node.muted }}>
                         {t("agent.connect.description")}
                     </div>
+                    <a href="/help/" target="_blank" rel="noreferrer" className="text-xs underline">{t("topNav.docs")}</a>
                 </div>
                 <div className="space-y-2">
                     {steps.map((step, index) => {

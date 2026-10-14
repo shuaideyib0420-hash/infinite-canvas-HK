@@ -2,6 +2,8 @@
 
 让 Codex / ZCode 可以打开并操作 Infinite Canvas。
 
+本站入口为 https://canvas.htvelumo.com ，Agent 首次启动和个人 Key 配置见 https://canvas.htvelumo.com/help/ 。
+
 ## 安装
 
 ### Codex
@@ -9,8 +11,8 @@
 macOS / Linux：
 
 ```bash
-git clone https://github.com/basketikun/infinite-canvas.git
-cd infinite-canvas
+git clone https://github.com/shuaideyib0420-hash/infinite-canvas-HK.git
+cd infinite-canvas-HK
 codex plugin marketplace add "$(pwd)"
 codex plugin add infinite-canvas@infinite-canvas-local
 ```
@@ -18,8 +20,8 @@ codex plugin add infinite-canvas@infinite-canvas-local
 Windows PowerShell：
 
 ```powershell
-git clone https://github.com/basketikun/infinite-canvas.git
-cd infinite-canvas
+git clone https://github.com/shuaideyib0420-hash/infinite-canvas-HK.git
+cd infinite-canvas-HK
 codex plugin marketplace add "$PWD"
 codex plugin add infinite-canvas@infinite-canvas-local
 ```

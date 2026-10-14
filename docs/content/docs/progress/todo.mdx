@@ -5,5 +5,11 @@ description: Planned follow-up work
 
 # TODO
 
+- Velumo 完整版本已开始实施：本站差异已私有备份；Fork主分支核实已等于固定官方基线，无需空的恢复提交。本站叠加在独立候选目录进行，具体测试及Git同步结果另记，生产未切换。
+- Velumo 后续实施前置要求：强制执行本仓库 AGENTS 的交付规则，读取最新维护入口并核对Git/工具基线，按任务审核范围、固定画布源码提交、适用检查和最终产物绑定、独立暂存及分级门禁形成可追溯交付；具体生产切换另有本次人工许可，小改不默认停站。下一版完整功能、现有本站定制和每位电脑用户的本地 Agent 要求保持，不因新流程自行缩减。
+- Velumo 发布前仍需完成最终HTTPS候选的CSP/CORS及本地网络许可、真实模型范围、另一台Windows电脑和适用服务器暂存/发布/回退门禁；不通过隐藏功能回避兼容问题。
+- Velumo 下一版验收：逐项区分界面恢复、实际连接、模拟接口和真实模型效果，覆盖文本、图片/参考图、视频、音频、跨设备 WebDAV 与既有本地作品/Key 保护；不把恢复入口当成功。网站账号联动、内置云存储和官方尚未实现的能力另列新增需求。
+- Velumo 多终端：采用用户明确选择的官方本地 Agent，每位电脑用户安装本站适配的配套工具、以自己的 token 连接自己的本机服务、配置自己的本站 Key；提供不依赖开发者环境的安装/启动/连接/排错说明。按支持的桌面系统核查兼容，另一台真实电脑单独验收；电脑与移动浏览器基础画布分别验收，本轮不增加云端 Agent 或承诺移动端免安装 Agent、作品自动跨设备同步。
+- Velumo 定制保留验收：官方完整功能与本站品牌/入口、个人 Key、名称/分组/参考价、记住/清除与导出排除凭据、图片清洗/原字节/MIME/下载、Data/Blob 保存、不自动补发及用量提示同时成立；原仓库无直达入口、MIT 版权保持。恢复时逐项比对，不能通过还原官方文件丢失本站处理。
 - Replace the Claude Code CLI adapter with a Claude Agent SDK adapter and improve the tool queue, following the [Local Agent Integration Plan](/docs/progress/local-agent-integration-plan).
 - Add Skill installation from web search, Skill resource-file management, and controlled local-memory persistence.

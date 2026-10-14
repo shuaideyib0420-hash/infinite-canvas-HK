@@ -1,6 +1,6 @@
 export default {
     meta: {
-        title: "无限画布",
+        title: "Velumo 画布",
         description: "一个无限画布创作工具",
     },
     theme: { toggle: "切换主题" },
@@ -467,7 +467,7 @@ export default {
             },
             runtime: { requestFailed: "请求失败（{{status}}）", urlRequired: "JSON URL 不能为空", fetchFailed: "「{{name}}」拉取失败：{{error}}", noPrompts: "「{{name}}」未解析到有效提示词", invalidRoot: "「{{name}}」格式错误：根节点必须是数组" },
         },
-        fileSecurity: "JSON 文件包含 API Key 和 WebDAV 凭据，请妥善保管。",
+        fileSecurity: "配置导出不包含 API Key 或 WebDAV 密码。作品保存在当前浏览器，请定期备份。",
         import: "导入配置",
         export: "导出配置",
         imported: "配置与用户偏好已导入",
@@ -525,7 +525,7 @@ export default {
             protocol: "协议",
             baseUrl: "接口地址",
             models: "渠道模型",
-            modelDescription: "已选 {{count}} 个；为每个模型指定能力并可自定义调用脚本。",
+            modelDescription: "已选 {{count}} 个；请按本站模型的实际能力分类，也可自定义调用脚本。",
             selectModels: "选择模型",
             scriptReady: "脚本已设",
             script: "调用脚本",
@@ -636,7 +636,7 @@ export default {
         status: { failed: "连接失败", connected: "已连接", connecting: "连接中", disconnected: "未连接" },
         state: { ready: "就绪", connectionRequired: "请填写 Local URL 和 Connect token", invalidUrl: "Local URL 格式不正确", offline: "离线", skillReadFailed: "读取 Skill 失败", skillParseFailed: "Skill 解析失败", requestFailed: "本地 Agent 请求失败" },
         siteTools: { canvasList: "画布列表", generationStatus: "生成任务状态", imageConfig: "生图配置", imageGenerate: "生图工作台生成", videoConfig: "视频配置", videoGenerate: "视频创作台生成", promptSearch: "搜索提示词", assetList: "资产列表", assetAdd: "添加资产", unknownTool: "未知工具：{{name}}", canvasLoading: "画布还在加载中，请稍后重试", canvasHint: "用 site_navigate 跳转 /canvas/{id} 打开对应画布", assetsLoading: "资产还在加载中，请稍后重试", assetTitleRequired: "请提供资产标题 title", textContentRequired: "kind=text 时需要提供 content 文本内容", imageUrlRequired: "kind=image 时需要提供 imageUrl（图片地址或 dataURL）", imageReadFailed: "无法读取该图片地址，请改用 dataURL 或可跨域访问的图片链接", assetKindUnsupported: "assets_add 仅支持 kind=text 或 kind=image", imageGenerationStarted: "已跳转生图工作台并触发生成，可用 generation_get_status 查询任务", imageConfigApplied: "已跳转生图工作台并填入参数，未触发生成", videoGenerationStarted: "已跳转视频创作台并触发生成，可用 generation_get_status 查询任务", videoConfigApplied: "已跳转视频创作台并填入参数，未触发生成" },
-        connect: { pluginTitle: "方式一：在 Codex 中使用插件", pluginText: "在 Codex app 安装 Infinite Canvas 插件后，通过插件启动画布，插件会自动启动本地 Agent 并带上连接信息。", directTitle: "方式二：直接运行 Agent", directText: "不使用 Codex 插件时，在终端运行下面命令，再回到网页里连接或手动填入 Local URL 和 Connect token。", commandCopied: "命令已复制", pluginReminder: "Codex 插件提醒", pluginReminderText: "只有安装 Codex 插件或手动添加 MCP 后，工具列表才会进入 Codex 上下文并增加 token 消耗；仅运行 npx -y @basketikun/canvas-agent@latest 启动本地 Agent 不会安装 MCP。", removePlugin: "移除插件", removeMcp: "移除手动 MCP", copyCommand: "复制命令", title: "连接本地 Agent", description: "按使用场景选择一种连接方式。", webConnection: "网页连接", autoDiscover: "默认自动读取 Local URL 和 Connect token，失败时再手动填写。", disconnect: "断开", connect: "连接", localAddress: "本地地址", urlPlaceholder: "例如 http://127.0.0.1:17371", token: "连接 Token", tokenPlaceholder: "自动发现，或手动填入 Connect token" },
+        connect: { pluginTitle: "方式一：在 Codex 中使用插件", pluginText: "先按本站帮助以自己的 Key 启动 Agent，再安装本站版本的 Infinite Canvas 插件打开画布，插件会带上本机连接信息。", directTitle: "方式二：直接运行 Agent", directText: "首次使用请先打开上方文档。Windows下载并运行本站启动脚本，填写自己的本站 Key 和文本模型。下方命令仅用于已经配置本站独立 Codex 环境的进程。", commandCopied: "命令已复制", pluginReminder: "Codex 插件提醒", pluginReminderText: "只有安装 Codex 插件或手动添加 MCP 后，工具列表才会进入 Codex 上下文并增加 token 消耗；仅运行 Canvas Agent 不会安装全局 MCP。", removePlugin: "移除插件", removeMcp: "移除手动 MCP", copyCommand: "复制命令", title: "连接本地 Agent", description: "每台电脑连接自己的 Agent；网页 Key 不会自动配置本地 Codex。", webConnection: "网页连接", autoDiscover: "可自动发现本机地址；Connect token 请从自己的 Agent 启动终端复制。", disconnect: "断开", connect: "连接", localAddress: "本地地址", urlPlaceholder: "例如 http://127.0.0.1:17371", token: "连接 Token", tokenPlaceholder: "填入本人 Agent 的 Connect token" },
         history: { workspace: "工作空间", defaultWorkspace: "默认画布目录", selected: "已选 {{count}} 条", count: "{{count}} 条历史", empty: "暂无历史", deleteCount: "删除 {{count}} 条", refresh: "刷新", newThread: "新对话", selectThread: "选择{{name}}", untitled: "未命名对话", current: "当前", noWorkspaceThreads: "当前工作空间还没有对话记录", connectHint: "连接本地 Agent 后显示历史记录" },
         skills: { selectLocal: "选择本地 Skill", search: "搜索 Skill", loading: "正在读取 Skill…", noMatch: "没有匹配的已启用 Skill", none: "还没有可用的 Skill", select: "选择 Skill", connectHint: "连接 Agent 后使用 Skill" },
         skillManager: {

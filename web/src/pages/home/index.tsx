@@ -115,6 +115,8 @@ export default function IndexPage() {
                     ))}
                 </div>
             </Image.PreviewGroup>
+            <p className="px-6 pb-6 text-center text-xs text-stone-500">作品保存在当前浏览器，请定期导出备份。生成超时或取消可能已计费，请先核对本站用量再决定是否重试。</p>
+            <p className="px-6 pb-6 text-center text-xs text-stone-500">基于 Infinite Canvas · Copyright © 2026 basketikun · MIT License</p>
         </main>
     );
 }

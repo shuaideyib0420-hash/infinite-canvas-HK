@@ -1,0 +1,149 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>功能介绍 · Velumo 画布</title><style>body{margin:auto;max-width:1000px;padding:24px;font:16px/1.75 system-ui;color:#292524;background:#fafaf9}nav{padding:12px 0;border-bottom:1px solid #ddd}a{color:#0369a1}main{padding:20px 0}pre{overflow:auto;padding:16px;background:#eee;border-radius:8px;white-space:pre-wrap}code{overflow-wrap:anywhere}table{border-collapse:collapse;display:block;overflow:auto}td,th{padding:8px;border:1px solid #ddd}img{max-width:100%}footer{font-size:13px;color:#57534e}@media(prefers-color-scheme:dark){body{color:#e7e5e4;background:#1c1917}a{color:#7dd3fc}pre{background:#292524}footer{color:#a8a29e}}</style></head><body><nav><a href="/">返回画布</a> · <a href="/help/">使用帮助</a> · <a href="features.html">功能介绍</a> · <a href="canvas-node-manual.html">节点操作</a> · <a href="canvas-shortcuts.html">快捷键</a> · <a href="codex-app-plugin.html">官方插件</a> · <a href="local-codex-canvas.html">Agent 与 MCP</a></nav><main><p><strong>本站说明：</strong>下文复用官方功能手册。本站模型请求使用个人 Velumo Key；网页的 Key 不会自动配置本地 Codex。Windows首次使用 Agent 请先按<a href="index.html">本站启动步骤</a>配置独立凭据。</p><div class="space-y-4 whitespace-normal [&amp;&gt;*:first-child]:mt-0 [&amp;&gt;*:last-child]:mb-0"><h1 class="mt-6 mb-2 font-semibold text-3xl" data-streamdown="heading-1">功能介绍</h1>
+<p>本文档记录当前项目已经实现的主要功能。</p>
+<h2 class="mt-6 mb-2 font-semibold text-2xl" data-streamdown="heading-2">画布项目</h2>
+<ul class="list-inside list-disc whitespace-normal [li_&amp;]:pl-6" data-streamdown="unordered-list">
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">支持创建多个画布项目。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">支持项目重命名、删除、批量选择和批量删除。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">支持单个画布项目导出为 JSON，也支持从 JSON 导入画布。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">画布项目保存在浏览器本地，登录账号后暂不会自动同步到服务器。</li>
+</ul>
+<h2 class="mt-6 mb-2 font-semibold text-2xl" data-streamdown="heading-2">无限画布</h2>
+<ul class="list-inside list-disc whitespace-normal [li_&amp;]:pl-6" data-streamdown="unordered-list">
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">支持拖动画布、滚轮缩放、缩放滑杆和重置视图。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">支持小地图定位，可开关小地图。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">支持点阵、网格线、空白三种背景。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">支持浅色和深色主题。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">支持框选、多选、全选、取消选择、删除选中。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">支持复制粘贴节点和节点之间的连线。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">支持撤销和重做节点、连线、视口、背景和助手会话变化。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">支持节点连线，并高亮当前节点相关的上下游节点和连线。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">支持快捷键帮助，覆盖缩放、框选、全选、复制粘贴、撤销重做、删除、退出选择和拖入图片。</li>
+</ul>
+<h2 class="mt-6 mb-2 font-semibold text-2xl" data-streamdown="heading-2">节点</h2>
+<p>目前画布中有三类节点：</p>
+<ul class="list-inside list-disc whitespace-normal [li_&amp;]:pl-6" data-streamdown="unordered-list">
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">图片节点：展示上传图片、生成图片或我的素材图片。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">文本节点：保存提示词、说明文案、AI 文字回答等文本内容。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">生成配置节点：汇总上游文本和图片，统一配置模型、比例、数量后批量生成图片或文本。</li>
+</ul>
+<p>节点支持：</p>
+<ul class="list-inside list-disc whitespace-normal [li_&amp;]:pl-6" data-streamdown="unordered-list">
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">拖拽移动。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">四角缩放。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">图片节点等比缩放或自由比例切换。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">查看节点基础信息和 JSON。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">删除、复制、粘贴。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">通过左右连接点建立上下游关系。</li>
+</ul>
+<h2 class="mt-6 mb-2 font-semibold text-2xl" data-streamdown="heading-2">图片工作流</h2>
+<ul class="list-inside list-disc whitespace-normal [li_&amp;]:pl-6" data-streamdown="unordered-list">
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">支持上传图片到新节点。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">支持拖拽图片文件到画布。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">支持替换已有图片节点内容。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">支持下载图片节点。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">支持把图片节点保存到“我的素材”。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">支持图片裁剪，并把裁剪结果生成为新的图片节点。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">支持本地多角度变换，并把结果生成为新的图片节点。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">支持生成失败后重试。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">批量生成多张图片时会先展示为图片组节点，支持叠卡预览、展开查看全部结果并设置主图。</li>
+</ul>
+<h2 class="mt-6 mb-2 font-semibold text-2xl" data-streamdown="heading-2">AI 生成</h2>
+<p>项目默认使用前台直连：前端使用浏览器本地配置的 Base URL、API Key 和 Model 直接请求 OpenAI 兼容接口，不再通过项目服务端转发 AI 请求。</p>
+<p>OpenAI 兼容图像和文本能力继续复用现有接口：</p>
+<ul class="list-inside list-disc whitespace-normal [li_&amp;]:pl-6" data-streamdown="unordered-list">
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item"><code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm" data-streamdown="inline-code">/v1/images/generations</code>：文生图。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item"><code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm" data-streamdown="inline-code">/v1/images/edits</code>：图生图/参考图编辑。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item"><code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm" data-streamdown="inline-code">/v1/responses</code>：文本问答、带图问答和在线 Agent 工具调用。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item"><code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm" data-streamdown="inline-code">/v1/models</code>：读取模型列表。</li>
+</ul>
+<p>视频能力支持两类接口：</p>
+<ul class="list-inside list-disc whitespace-normal [li_&amp;]:pl-6" data-streamdown="unordered-list">
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">OpenAI 风格视频：<code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm" data-streamdown="inline-code">POST /v1/videos</code>、<code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm" data-streamdown="inline-code">GET /v1/videos/{id}</code>、<code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm" data-streamdown="inline-code">GET /v1/videos/{id}/content</code>。</li>
+</ul>
+<p>Base URL 如果已经以 <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm" data-streamdown="inline-code">/v1</code> 结尾，系统不会再追加 <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm" data-streamdown="inline-code">/v1</code>。</p>
+<p>配置弹窗里的“拉取模型列表”会真实请求 OpenAI <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm" data-streamdown="inline-code">/models</code>。</p>
+<p>可配置项：</p>
+<ul class="list-inside list-disc whitespace-normal [li_&amp;]:pl-6" data-streamdown="unordered-list">
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">Base URL。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">API Key。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">默认模型。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">图片质量。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">图片比例。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">生成数量。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">视频模型。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">视频比例、清晰度、时长、生成声音和水印。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">自定义生图 / 视频接口的调用方式，灵活适配不同中转站与自建服务。</li>
+</ul>
+<p>普通图片/文本节点可以直接输入提示词生成结果。生成配置节点可以读取上游节点内容，并按节点自己的配置批量生成多个图片或文本结果。生成配置节点支持预览当前提示词和参考图输入，并调整输入顺序。</p>
+<p>节点下方对话框和组装提示词输入框都支持 <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm" data-streamdown="inline-code">@</code> 引用已连接的图片、文本、视频、音频等资源；<code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm" data-streamdown="inline-code">@</code> 引用图片时，输入框内会直接显示该图片的真实缩略图，而不再是「图片1」这类文字编号，发送时会按当前连接自动编号交给模型理解。由于引用改在对话框内直接 <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm" data-streamdown="inline-code">@</code>，画布节点右上角不再显示「图片1 / 文本1」资源角标。</p>
+<p>视频生成可从文本节点读取 prompt，从图片节点读取参考图。生成成功后会把视频插入画布为视频节点并使用原生播放器预览。</p>
+<h2 class="mt-6 mb-2 font-semibold text-2xl" data-streamdown="heading-2">画布助手</h2>
+<p>画布右侧助手面板支持：</p>
+<ul class="list-inside list-disc whitespace-normal [li_&amp;]:pl-6" data-streamdown="unordered-list">
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">文本问答。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">生图。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">读取当前选中节点作为引用。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">自动把选中节点的上游节点也纳入引用。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">粘贴图片到助手输入框并插入画布。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">历史会话。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">删除单条或多条会话。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">重试回答。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">把助手生成的文本插入画布。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">把助手生成的图片插入画布。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">折叠和展开助手面板。</li>
+</ul>
+<h2 class="mt-6 mb-2 font-semibold text-2xl" data-streamdown="heading-2">节点插件系统</h2>
+<p>画布支持通过节点插件扩展新的节点类型，内置节点之外的能力都可以以插件形式加载：</p>
+<ul class="list-inside list-disc whitespace-normal [li_&amp;]:pl-6" data-streamdown="unordered-list">
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">支持通过 URL 动态安装、启用、更新和卸载远程节点插件。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">提供官方插件注册表，节点插件面板可从项目仓库读取官方插件列表并一键安装。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">提供 TypeScript 插件开发 SDK，可自行开发画布节点插件，并使用 AI 生成、面板控制等扩展能力。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">内置 Markdown、SVG、HTML、3D 全景、便利贴等示例插件。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">插件面板会显示插件版本，并对可升级的插件给出提醒。</li>
+</ul>
+<p>Codex App 插件的安装与使用见 <button class="wrap-anywhere appearance-none text-left font-medium text-primary underline" data-incomplete="false" data-streamdown="link" type="button">Codex App 插件</button>。</p>
+<h2 class="mt-6 mb-2 font-semibold text-2xl" data-streamdown="heading-2">提示词库</h2>
+<p>前台提示词库支持：</p>
+<ul class="list-inside list-disc whitespace-normal [li_&amp;]:pl-6" data-streamdown="unordered-list">
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">按标题搜索。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">按标签筛选。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">按来源筛选。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">查看提示词详情。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">查看封面和结果图。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">复制提示词。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">把提示词加入“我的素材”。</li>
+</ul>
+<p>提示词管理支持：</p>
+<ul class="list-inside list-disc whitespace-normal [li_&amp;]:pl-6" data-streamdown="unordered-list">
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">7 个内置来源可独立启用、查看和拉取，也可按设定周期批量更新。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">添加、编辑和删除自定义标准 JSON 来源。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">拉取失败时保留上一次成功缓存，并显示来源状态和最近成功时间。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">跨已启用来源搜索提示词，按标签筛选，查看详情、复制提示词或插入画布。</li>
+</ul>
+<p>7 个内置来源为 Banana Prompt Quicker、DavidWu GPT Image 2、Freestylefly GPT Image 2、Awesome GPT Image、Awesome GPT-4o、YouMind GPT Image 2 和 YouMind Nano Banana Pro。应用从 <button class="wrap-anywhere appearance-none text-left font-medium text-primary underline" data-incomplete="false" data-streamdown="link" type="button">Image Prompts</button> 统一仓库读取标准 JSON，由浏览器前端直连并缓存到 IndexedDB。完整来源见<button class="wrap-anywhere appearance-none text-left font-medium text-primary underline" data-incomplete="false" data-streamdown="link" type="button">第三方提示词来源</button>。</p>
+<h2 class="mt-6 mb-2 font-semibold text-2xl" data-streamdown="heading-2">素材</h2>
+<p>“我的素材”是浏览器本地素材库，支持：</p>
+<ul class="list-inside list-disc whitespace-normal [li_&amp;]:pl-6" data-streamdown="unordered-list">
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">新增文本素材和图片素材。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">编辑素材标题、封面、标签、来源、备注和内容。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">删除素材。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">按关键词搜索。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">按类型筛选。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">分页浏览。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">复制文本素材。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">下载图片素材。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">从提示词库和画布节点加入素材。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">在画布中插入素材。</li>
+</ul>
+<h2 class="mt-6 mb-2 font-semibold text-2xl" data-streamdown="heading-2">配置和同步</h2>
+<ul class="list-inside list-disc whitespace-normal [li_&amp;]:pl-6" data-streamdown="unordered-list">
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">当前版本不需要账号登录，也不再提供后台管理页面。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">配置与用户偏好弹窗支持多个 OpenAI 兼容渠道、默认模型、生成偏好和 WebDAV 同步设置。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">第三方提示词、WebDAV 和 AI 接口都由浏览器前端直连，不经过项目后端代理。</li>
+</ul>
+<h2 class="mt-6 mb-2 font-semibold text-2xl" data-streamdown="heading-2">当前限制</h2>
+<ul class="list-inside list-disc whitespace-normal [li_&amp;]:pl-6" data-streamdown="unordered-list">
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">画布项目和“我的素材”目前只保存在浏览器本地，不会随账号同步。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">AI API Key 保存在浏览器本地，并由浏览器直接请求配置的 OpenAI 兼容接口；只适合个人或可信环境使用。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">画布更适合桌面端使用，移动端触控体验还未系统完善。</li>
+</ul></div></main><footer>基于 Infinite Canvas · Copyright © 2026 basketikun · <a href="/licenses/infinite-canvas-MIT.txt">MIT License</a></footer></body></html>

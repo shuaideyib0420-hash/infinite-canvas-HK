@@ -1,11 +1,12 @@
-import { Button, Drawer, Input, Segmented, Select, Space } from "antd";
+import { Button, Drawer, Input, Segmented, Select, Space, Switch } from "antd";
 import { ListPlus, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { defaultBaseUrlForApiFormat, guessCapability, normalizeChannelModels, type ApiCallFormat, type ChannelModel, type ModelCapability, type ModelChannel } from "@/stores/use-config-store";
+import { createModelChannel, defaultBaseUrlForApiFormat, guessCapability, normalizeChannelModels, useConfigStore, type ApiCallFormat, type ChannelModel, type ModelCapability, type ModelChannel } from "@/stores/use-config-store";
 import { ModelScriptEditor } from "./model-script-editor";
 import { ModelSelectModal } from "./model-select-modal";
+import { VelumoKeyDetails } from "./velumo-key-details";
 
 type ScriptTarget = { name: string; capability: ModelCapability; value: string };
 
@@ -14,6 +15,8 @@ export function ChannelEditorDrawer({ open, channel, onSave, onClose }: { open: 
     const [draft, setDraft] = useState<ModelChannel | null>(channel);
     const [selectOpen, setSelectOpen] = useState(false);
     const [scriptTarget, setScriptTarget] = useState<ScriptTarget | null>(null);
+    const rememberApiKey = useConfigStore((state) => state.config.rememberApiKey);
+    const updateConfig = useConfigStore((state) => state.updateConfig);
     const apiFormatOptions: Array<{ label: string; value: ApiCallFormat }> = [
         { label: "OpenAI", value: "openai" },
         { label: "Gemini", value: "gemini" },
@@ -44,7 +47,7 @@ export function ChannelEditorDrawer({ open, channel, onSave, onClose }: { open: 
     const removeModel = (name: string) => setModels(draft.models.filter((model) => model.name !== name));
 
     const save = () => {
-        onSave({ ...draft, name: draft.name.trim() || t("config.channels.unnamed"), models: normalizeChannelModels(draft.models) });
+        onSave(createModelChannel({ ...draft, name: draft.name.trim() || t("config.channels.unnamed"), models: normalizeChannelModels(draft.models) }));
         onClose();
     };
 
@@ -75,13 +78,20 @@ export function ChannelEditorDrawer({ open, channel, onSave, onClose }: { open: 
                 </label>
                 <label className="block md:col-span-2">
                     <span className="mb-1 block text-sm font-medium">{t("config.channelEditor.baseUrl")}</span>
-                    <Input value={draft.baseUrl} onChange={(event) => patch({ baseUrl: event.target.value })} placeholder="https://api.example.com" />
+                    <Input value={defaultBaseUrlForApiFormat(draft.apiFormat)} readOnly />
                 </label>
                 <label className="block md:col-span-2">
                     <span className="mb-1 block text-sm font-medium">API Key</span>
                     <Input.Password value={draft.apiKey} onChange={(event) => patch({ apiKey: event.target.value })} placeholder="sk-..." />
+                    <div className="mt-2 flex items-center gap-2 text-xs text-stone-500">
+                        <Switch size="small" checked={rememberApiKey} onChange={(value) => updateConfig("rememberApiKey", value)} />
+                        <span>在此浏览器记住 API Key（默认仅本次会话）</span>
+                        <Button size="small" type="link" onClick={() => patch({ apiKey: "" })}>清除 Key</Button>
+                    </div>
                 </label>
             </div>
+
+            <div className="mt-4"><VelumoKeyDetails channel={draft} /></div>
 
             <div className="mt-6 mb-3 flex flex-wrap items-center justify-between gap-2">
                 <div>

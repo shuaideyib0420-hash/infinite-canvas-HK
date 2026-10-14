@@ -230,7 +230,10 @@ export default function ImagePage() {
     }, [autoRunToken]);
 
     const downloadImage = (image: GeneratedImage, index: number) => {
-        saveAs(image.dataUrl, `image-${index + 1}.png`);
+        void fetch(image.dataUrl).then((response) => response.blob()).then((blob) => {
+            const extension = blob.type === "image/jpeg" ? "jpg" : blob.type === "image/webp" ? "webp" : "png";
+            saveAs(blob, `image-${index + 1}.${extension}`);
+        }).catch(() => message.error("原图下载失败，请重新下载；无需重新生成。"));
     };
 
     const addResultToReferences = async (image: GeneratedImage, index: number) => {

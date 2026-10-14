@@ -189,7 +189,7 @@ export function AppConfigPanel({ showDoneButton = false, initialTab = "channels"
                         children: (
                             <div>
                                 <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-                                    <div className="text-xs text-stone-500">{t("config.channels.description")}</div>
+                                    <div className="text-xs text-stone-500">填写你在 Velumo 控制台创建的个人 Key，再选择该 Key 可用的模型。多个渠道可分别保存不同的本站 Key。</div>
                                     <Button type="primary" icon={<Plus className="size-4" />} onClick={addChannel}>
                                         {t("config.channels.add")}
                                     </Button>

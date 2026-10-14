@@ -1,0 +1,66 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>节点操作 · Velumo 画布</title><style>body{margin:auto;max-width:1000px;padding:24px;font:16px/1.75 system-ui;color:#292524;background:#fafaf9}nav{padding:12px 0;border-bottom:1px solid #ddd}a{color:#0369a1}main{padding:20px 0}pre{overflow:auto;padding:16px;background:#eee;border-radius:8px;white-space:pre-wrap}code{overflow-wrap:anywhere}table{border-collapse:collapse;display:block;overflow:auto}td,th{padding:8px;border:1px solid #ddd}img{max-width:100%}footer{font-size:13px;color:#57534e}@media(prefers-color-scheme:dark){body{color:#e7e5e4;background:#1c1917}a{color:#7dd3fc}pre{background:#292524}footer{color:#a8a29e}}</style></head><body><nav><a href="/">返回画布</a> · <a href="/help/">使用帮助</a> · <a href="features.html">功能介绍</a> · <a href="canvas-node-manual.html">节点操作</a> · <a href="canvas-shortcuts.html">快捷键</a> · <a href="codex-app-plugin.html">官方插件</a> · <a href="local-codex-canvas.html">Agent 与 MCP</a></nav><main><p><strong>本站说明：</strong>下文复用官方功能手册。本站模型请求使用个人 Velumo Key；网页的 Key 不会自动配置本地 Codex。Windows首次使用 Agent 请先按<a href="index.html">本站启动步骤</a>配置独立凭据。</p><div class="space-y-4 whitespace-normal [&amp;&gt;*:first-child]:mt-0 [&amp;&gt;*:last-child]:mb-0"><h1 class="mt-6 mb-2 font-semibold text-3xl" data-streamdown="heading-1">画布节点操作手册</h1>
+<p>本文档记录画布节点的主要用途和操作流程，方便使用和后续开发维护。当前先介绍文本节点。</p>
+<h2 class="mt-6 mb-2 font-semibold text-2xl" data-streamdown="heading-2">文本节点</h2>
+<p>文本节点用于保存提示词、草稿、说明文案和 AI 生成的文字结果。它既可以作为独立文本内容，也可以作为下游生成配置节点的输入。</p>
+<h3 class="mt-6 mb-2 font-semibold text-xl" data-streamdown="heading-3">编辑文本内容</h3>
+<ul class="list-inside list-disc whitespace-normal [li_&amp;]:pl-6" data-streamdown="unordered-list">
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">双击文本节点内容区域，直接编辑节点里的文字。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">选中文本节点后，点击顶部工具栏的“编辑文字”，进入文字编辑状态。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">顶部工具栏的“缩小”和“放大”用于调整文本节点字号。</li>
+</ul>
+<h3 class="mt-6 mb-2 font-semibold text-xl" data-streamdown="heading-3">用下方对话框生成或修改文本</h3>
+<ul class="list-inside list-disc whitespace-normal [li_&amp;]:pl-6" data-streamdown="unordered-list">
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">选中文本节点后，点击顶部工具栏的“编辑”，打开节点下方对话框。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">文本节点下方对话框只用于生成或改写文本，不承担生图功能。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">当文本节点为空时，输入框用于填写想生成的文本内容；点击发送后，结果会回填到当前文本节点。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">当文本节点已有内容时，输入框用于填写想把本段文本修改成什么；点击发送后，会在右侧生成新的文本节点，并自动连接原节点和新节点。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">输入内容可以手写，也可以从提示词库选择。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">输入框支持 <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm" data-streamdown="inline-code">@</code> 引用已连接的图片、文本、视频、音频资源；<code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm" data-streamdown="inline-code">@</code> 引用图片时会在输入框内直接显示真实缩略图，发送时按当前连接自动编号交给模型。因此不需要再记忆「图片1 / 文本1」编号，画布节点右上角也不再显示资源角标。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">对话框里的模型下拉来自全局配置里已拉取的模型列表；选择结果只作用于当前节点，不会修改其它节点或全局默认模型。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">如果下拉中没有模型，需要先打开配置弹窗拉取模型列表，并设置默认生图模型和默认文本模型。</li>
+</ul>
+<h3 class="mt-6 mb-2 font-semibold text-xl" data-streamdown="heading-3">用文本节点生成图片</h3>
+<ul class="list-inside list-disc whitespace-normal [li_&amp;]:pl-6" data-streamdown="unordered-list">
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">先在文本节点中准备好要用于生图的文本内容。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">点击文本节点顶部工具栏的“生图”按钮。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">系统会在文本节点右侧自动创建一个生成配置节点，并连接文本节点到生成配置节点。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">生成配置节点会读取上游文本内容作为生图提示词，并立即开始生成图片。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">后续需要调整模型、分辨率（1k / 2k / 4k / 自动）、宽高比、数量时，可以在生成配置节点里修改后再次生成。</li>
+</ul>
+<h3 class="mt-6 mb-2 font-semibold text-xl" data-streamdown="heading-3">用图片节点继续生成图片</h3>
+<ul class="list-inside list-disc whitespace-normal [li_&amp;]:pl-6" data-streamdown="unordered-list">
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">选中空图片节点后点击“生成”，会直接在当前节点里生成结果，不再额外保留一个空框。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">当数量为 <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm" data-streamdown="inline-code">1</code> 时，生成结果会直接回填到当前图片节点。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">当数量大于 <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm" data-streamdown="inline-code">1</code> 时，当前图片节点会作为主图节点，右侧继续生成对应数量的子图节点。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">如果图片节点本身已经有内容，则会沿用已有图片作为参考图，再生成新的图片批次。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">每个生成出来的图片节点都会在自身 <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm" data-streamdown="inline-code">metadata</code> 下记录提示词、生成类型、模型、尺寸、质量、数量和参考图引用，方便后续重试。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">如果重试时参考图已经丢失或无法恢复，系统会直接提示，避免误发空的图生图请求。</li>
+</ul>
+<h3 class="mt-6 mb-2 font-semibold text-xl" data-streamdown="heading-3">视频节点</h3>
+<ul class="list-inside list-disc whitespace-normal [li_&amp;]:pl-6" data-streamdown="unordered-list">
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">工具栏可以新建视频节点，也可以拖入或上传本地视频文件。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">视频节点使用原生播放器展示内容，可在节点内直接播放、暂停和拖动进度。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">空视频节点下方对话框可输入提示词生成视频，结果会回填到当前节点。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">从文本、图片或配置节点创建视频生成时，会在右侧生成新的视频节点并自动连接。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">生成配置节点的视频模式会读取上游文本作为 prompt，读取上游图片作为参考图，读取上游视频作为参考视频，读取上游音频作为参考音频，并在输入预览里显示这些参考。未配置调用脚本时，OpenAI 和 Gemini 内置请求与插入模板使用相同字段；自定义视频调用脚本可通过 <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm" data-streamdown="inline-code">videos</code>、<code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm" data-streamdown="inline-code">audios</code> 变量读取这些参考文件。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">视频设置使用 <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm" data-streamdown="inline-code">480p</code> / <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm" data-streamdown="inline-code">720p</code> / <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm" data-streamdown="inline-code">1080p</code> 与 <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm" data-streamdown="inline-code">1:1</code>、<code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm" data-streamdown="inline-code">3:4</code>、<code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm" data-streamdown="inline-code">4:3</code>、<code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm" data-streamdown="inline-code">16:9</code>、<code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm" data-streamdown="inline-code">9:16</code>、<code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm" data-streamdown="inline-code">21:9</code> 或自动计算宽高，时长为 4–30 秒滑杆。也支持「首尾帧」和「全能参考」两种模式。首尾帧模式下 1 张图作为首帧、2 张图作为首尾帧发送专门字段；超过 2 张图时即使选了首尾帧也会按全能参考发送。内置请求和调用脚本都会使用解析后的 <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm" data-streamdown="inline-code">frames</code> 或 <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm" data-streamdown="inline-code">reference</code>。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">OpenAI 风格接口使用 <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm" data-streamdown="inline-code">POST /v1/videos</code>、<code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm" data-streamdown="inline-code">GET /v1/videos/{id}</code> 和 <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm" data-streamdown="inline-code">GET /v1/videos/{id}/content</code>，按模式发送 <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm" data-streamdown="inline-code">first_frame</code> / <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm" data-streamdown="inline-code">last_frame</code> 或 <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm" data-streamdown="inline-code">image[]</code>，并可附带 <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm" data-streamdown="inline-code">video[]</code> / <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm" data-streamdown="inline-code">audio[]</code>。Gemini 格式渠道使用 <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm" data-streamdown="inline-code">models/{model}:predictLongRunning</code> 并轮询 operation，按模式发送 <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm" data-streamdown="inline-code">image</code> / <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm" data-streamdown="inline-code">lastFrame</code> 或 <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm" data-streamdown="inline-code">referenceImages</code>。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">创建远端任务后会把任务 ID 写入视频节点；刷新页面后会自动继续查询任务状态，也可点击「获取任务状态」手动拉取，直到生成成功、任务失败或查询请求报错。</li>
+</ul>
+<h2 class="mt-6 mb-2 font-semibold text-2xl" data-streamdown="heading-2">组节点</h2>
+<p>组节点用来把多个节点收成一块，方便一起移动，也可以作为生成输入一次性引用组内资源。</p>
+<ul class="list-inside list-disc whitespace-normal [li_&amp;]:pl-6" data-streamdown="unordered-list">
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">框选或按住 <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm" data-streamdown="inline-code">Shift / Ctrl / Cmd</code> 点选多个节点后，会显示包住全部选中节点的圆角虚线框，框上方出现「打组」。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">点击「打组」或按 <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm" data-streamdown="inline-code">Ctrl / Cmd</code> + <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm" data-streamdown="inline-code">G</code>，会新建一个组节点包住这些内容，节点保持原位置。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">选中组后，可用顶部工具条的「解散组」、右键菜单，或 <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm" data-streamdown="inline-code">Ctrl / Cmd</code> + <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm" data-streamdown="inline-code">Shift</code> + <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-sm" data-streamdown="inline-code">G</code> 取消分组。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">也可以先在工具栏新建空组，再把节点拖进去；拖出组外会自动取消归属。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">把组连到生成节点后，组内有内容的图片、视频、音频、文本和可引用扩展节点都会作为输入。</li>
+</ul>
+<h2 class="mt-6 mb-2 font-semibold text-2xl" data-streamdown="heading-2">推荐流程</h2>
+<ol class="list-inside list-decimal whitespace-normal [li_&amp;]:pl-6" data-streamdown="ordered-list">
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">新建文本节点，写入图片创作想法。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">打开文本节点下方对话框，让 AI 优化或扩写这段提示词。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">改写结果会生成到新的文本节点，保留原始文本方便对比。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">确认文本节点内容后，点击顶部工具栏“生图”。</li>
+<li class="py-1 [&amp;&gt;p]:inline" data-streamdown="list-item">在自动创建的生成配置节点中继续调整图片参数或重新生成。</li>
+</ol></div></main><footer>基于 Infinite Canvas · Copyright © 2026 basketikun · <a href="/licenses/infinite-canvas-MIT.txt">MIT License</a></footer></body></html>

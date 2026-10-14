@@ -1,6 +1,15 @@
 import i18n from "@/i18n";
 import type { ReferenceImage } from "@/types/image";
 
+export function base64ImageDataUrl(base64: string) {
+    const prefix = atob(base64.slice(0, 16));
+    const mimeType = prefix.startsWith("\x89PNG\r\n\x1a\n") ? "image/png"
+        : prefix.startsWith("\xff\xd8\xff") ? "image/jpeg"
+        : prefix.startsWith("RIFF") && prefix.slice(8, 12) === "WEBP" ? "image/webp" : null;
+    if (!mimeType) throw new Error("图片格式无法识别，请先核对用量记录，不要自动重发。 ");
+    return `data:${mimeType};base64,${base64}`;
+}
+
 export function formatBytes(bytes: number) {
     if (!Number.isFinite(bytes) || bytes <= 0) {
         return "";

@@ -4,6 +4,7 @@ import { persist } from "zustand/middleware";
 import { nanoid } from "nanoid";
 
 import i18n from "@/i18n";
+import { VELUMO_API_URL } from "@/constant/env";
 
 export type ApiCallFormat = "openai" | "gemini";
 export type ModelCapability = "image" | "video" | "text" | "audio";
@@ -30,6 +31,7 @@ export type AiConfig = {
     apiKey: string;
     apiFormat: ApiCallFormat;
     channels: ModelChannel[];
+    rememberApiKey: boolean;
     model: string;
     imageModel: string;
     videoModel: string;
@@ -74,12 +76,13 @@ export type ChannelCredentialsImportResult = {
 
 export const CONFIG_STORE_KEY = "infinite-canvas:ai_config_store";
 const CHANNEL_MODEL_SEPARATOR = "::";
-const OPENAI_BASE_URL = "https://api.openai.com";
-const GEMINI_BASE_URL = "https://generativelanguage.googleapis.com";
+const OPENAI_BASE_URL = VELUMO_API_URL;
+const GEMINI_BASE_URL = VELUMO_API_URL;
 export const LOCAL_PROXY_PACKAGE = "@basketikun/canvas-proxy";
 export const DEFAULT_LOCAL_PROXY_URL = "http://127.0.0.1:23210";
 
 export const defaultConfig: AiConfig = {
+    rememberApiKey: false,
     channelMode: "local",
     baseUrl: OPENAI_BASE_URL,
     apiKey: "",
@@ -87,23 +90,18 @@ export const defaultConfig: AiConfig = {
     channels: [
         {
             id: "default",
-            name: i18n.t("config.channels.defaultName"),
+            name: "Velumo",
             baseUrl: OPENAI_BASE_URL,
             apiKey: "",
             apiFormat: "openai",
-            models: [
-                { name: "gpt-image-2", capability: "image" },
-                { name: "grok-imagine-video", capability: "video" },
-                { name: "gpt-5.5", capability: "text" },
-                { name: "gpt-4o-mini-tts", capability: "audio" },
-            ],
+            models: [],
         },
     ],
-    model: "default::gpt-image-2",
-    imageModel: "default::gpt-image-2",
-    videoModel: "default::grok-imagine-video",
-    textModel: "default::gpt-5.5",
-    audioModel: "default::gpt-4o-mini-tts",
+    model: "",
+    imageModel: "",
+    videoModel: "",
+    textModel: "",
+    audioModel: "",
     audioVoice: "alloy",
     audioFormat: "mp3",
     audioSpeed: "1",
@@ -115,7 +113,7 @@ export const defaultConfig: AiConfig = {
     videoMode: "frames",
     systemPrompt: "",
     reasoningEffort: "auto",
-    models: ["default::gpt-image-2", "default::grok-imagine-video", "default::gpt-5.5", "default::gpt-4o-mini-tts"],
+    models: [],
     quality: "auto",
     size: "1:1",
     background: "",
@@ -247,12 +245,13 @@ export const useConfigStore = create<ConfigStore>()(
         }),
         {
             name: CONFIG_STORE_KEY,
-            partialize: (state) => ({ config: state.config, webdav: state.webdav }),
+            partialize: (state) => ({ config: state.config.rememberApiKey ? state.config : withoutApiKeys(state.config), webdav: state.webdav }),
             merge: (persisted, current) => {
                 const persistedState = (persisted || {}) as Partial<ConfigStore>;
                 const persistedConfig = (persistedState.config || {}) as Partial<AiConfig>;
                 const persistedWebdav = (persistedState.webdav || {}) as Partial<WebdavSyncConfig>;
-                const config = { ...defaultConfig, ...persistedConfig };
+                const mergedConfig = { ...defaultConfig, ...persistedConfig };
+                const config = mergedConfig.rememberApiKey ? mergedConfig : withoutApiKeys({ ...mergedConfig, channels: Array.isArray(mergedConfig.channels) ? mergedConfig.channels : [] });
                 if (!Array.isArray(persistedConfig.channels)) config.channels = [];
                 const channels = normalizeChannels(config);
                 const models = modelOptionsFromChannels(channels);
@@ -262,6 +261,7 @@ export const useConfigStore = create<ConfigStore>()(
                     config: {
                         ...config,
                         channelMode: "local",
+                        baseUrl: VELUMO_API_URL,
                         apiFormat: normalizeApiFormat(config.apiFormat),
                         channels,
                         models,
@@ -316,7 +316,7 @@ export function createModelChannel(channel?: Partial<ModelChannel>): ModelChanne
     return {
         id: channel?.id?.trim() || nanoid(),
         name: channel?.name?.trim() || i18n.t("config.channels.newName"),
-        baseUrl: channel?.baseUrl?.trim() || defaultBaseUrlForApiFormat(apiFormat),
+        baseUrl: VELUMO_API_URL,
         apiKey: channel?.apiKey || "",
         apiFormat,
         models: normalizeChannelModels(channel?.models),
@@ -340,7 +340,7 @@ export function upsertChannelCredentials(
         if (existing.baseUrl === baseUrl && (!apiKey || existing.apiKey === apiKey)) {
             return { status: "updated", channelName: existing.name, config };
         }
-        const updated = { ...existing, baseUrl, ...(apiKey ? { apiKey } : {}) };
+        const updated = createModelChannel({ ...existing, baseUrl, ...(apiKey ? { apiKey } : {}) });
         const channels = config.channels.map((channel, index) => (index === matchingIndex ? updated : channel));
         return { status: "updated", channelName: existing.name, config: { ...config, channels } };
     }
@@ -440,7 +440,7 @@ export function resolveModelRequestConfig(config: AiConfig, value: string) {
     return {
         ...config,
         model: modelOptionName(value || config.model),
-        baseUrl: channel.baseUrl,
+        baseUrl: VELUMO_API_URL,
         apiKey: channel.apiKey,
         apiFormat: channel.apiFormat,
     };
@@ -485,7 +485,7 @@ function uniqueModelOptions(models: string[]) {
 }
 
 export function buildApiUrl(baseUrl: string, path: string) {
-    const normalizedBaseUrl = baseUrl.trim().replace(/\/+$/, "");
+    const normalizedBaseUrl = VELUMO_API_URL;
     const lowerBaseUrl = normalizedBaseUrl.toLowerCase();
     const apiBaseUrl = lowerBaseUrl.endsWith("/v1") ? normalizedBaseUrl : `${normalizedBaseUrl}/v1`;
     return withLocalProxy(`${apiBaseUrl}${path}`);
@@ -497,11 +497,15 @@ export function normalizeLocalProxyUrl(value: string) {
     return /^https?:\/\//i.test(trimmed) ? trimmed : `http://${trimmed}`;
 }
 
-/** Prefix an outgoing request with the local forwarding proxy so the browser is not blocked by CORS. */
+/** Prefix requests with the official local forwarding proxy when enabled. */
 export function withLocalProxy(url: string) {
     const { proxyEnabled, proxyUrl } = useConfigStore.getState().config;
     if (!proxyEnabled || !/^https?:\/\//i.test(url)) return url;
     const base = normalizeLocalProxyUrl(proxyUrl);
     if (!base || url.startsWith(`${base}/`)) return url;
     return `${base}/${url}`;
+}
+
+export function withoutApiKeys(config: AiConfig): AiConfig {
+    return { ...config, apiKey: "", channels: config.channels.map((channel) => ({ ...channel, apiKey: "" })) };
 }
