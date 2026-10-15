@@ -682,7 +682,7 @@ function parseGeminiImagePayload(payload: GeminiPayload) {
             ?.flatMap((candidate) => candidate.content?.parts || [])
             .map((part) => {
                 const inlineData = part.inlineData || (part.inline_data ? { mimeType: part.inline_data.mimeType || part.inline_data.mime_type, data: part.inline_data.data } : undefined);
-                if (inlineData?.data) return `data:${inlineData.mimeType || "image/png"};base64,${inlineData.data}`;
+                if (inlineData?.data && (!inlineData.mimeType || inlineData.mimeType.startsWith("image/"))) return `data:${inlineData.mimeType || "image/png"};base64,${inlineData.data}`;
                 return part.fileData?.fileUri || null;
             })
             .filter((value): value is string => Boolean(value))
