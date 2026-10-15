@@ -21,7 +21,7 @@ Object.defineProperty(globalThis, "localStorage", {
 });
 Object.defineProperty(globalThis, "window", { configurable: true, value: { localStorage: globalThis.localStorage, location: { href: "https://canvas.htvelumo.com/canvas/fixture" } } });
 mock.module("@/i18n", () => ({ default: { t: (key: string) => key } }));
-mock.module("@/constant/env", () => ({ VELUMO_API_URL: "https://api.htvelumo.com" }));
+mock.module("@/constant/env", () => ({ VELUMO_API_URL: "https://api.htvelumo.com", PLUGIN_REGISTRY_URL: "/plugins/official-plugins.json" }));
 mock.module("@/services/image-storage", () => ({ imageToDataUrl: async (image: { dataUrl: string }) => image.dataUrl }));
 let exported: Blob;
 mock.module("file-saver", () => ({
@@ -87,6 +87,25 @@ test("unknown format fails without retry", async () => {
     await expect(requestGeneration(config(), "fixture")).rejects.toThrow();
     expect(calls).toBe(1);
 });
+
+for (const format of ["openai", "gemini"] as const)
+    test(`${format} generation and editing use a 20 minute deadline and preserve cancellation`, async () => {
+        const current = config();
+        current.channels[0].apiFormat = format;
+        const controller = new AbortController();
+        let calls = 0;
+        axios.defaults.adapter = async (request) => {
+            calls++;
+            expect(request.timeout).toBe(20 * 60_000);
+            expect(request.signal).toBe(controller.signal);
+            const base64 = btoa(formats[0][1]);
+            const data = format === "gemini" ? { candidates: [{ content: { parts: [{ inlineData: { mimeType: "image/png", data: base64 } }] } }] } : { data: [{ b64_json: base64 }] };
+            return { status: 200, statusText: "OK", headers: {}, config: request, data };
+        };
+        await requestGeneration(current, "fixture", { signal: controller.signal });
+        await requestEdit(current, "fixture", [{ id: "reference", dataUrl: `data:image/png;base64,${btoa(formats[0][1])}`, name: "reference.png", type: "image/png" }], { signal: controller.signal });
+        expect(calls).toBe(2);
+    });
 test("site origin is preserved while Gemini protocol and model scripts remain available", () => {
     const script = "return []";
     const channel = createModelChannel({ ...config().channels[0], baseUrl: "https://untrusted.invalid", apiFormat: "gemini", models: [{ name: "gpt-image-1", capability: "image", script }] });
